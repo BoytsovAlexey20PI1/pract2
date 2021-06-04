@@ -1,0 +1,43 @@
+#include <ctime>
+#include <chrono>
+using namespace std;
+using namespace chrono;
+
+bool Generator(uint64_t num)
+{
+    if (num<2)
+        return false;
+    if (num<4)
+        return true;
+    if ((num & 1)==0)
+        return false;
+    for(uint64_t i=3; i<=(uint64_t) sqrt(num); i+=2)
+        if ((num % i) ==0)
+            return false;
+    return true;
+}
+
+
+int main(int argc, char **argv)
+{
+uint64_t num;
+bool gen;
+uint64_t a[3];
+mt19937_64 rnd(clock());
+for(int i=0; i<3; i++){
+    gen=true;
+    system_clock::time_point begin = system_clock::now();
+    while(gen==true){
+        num=rnd();
+        if (Generator(num)==true){
+            gen=false;
+        }
+        a[i]=num;
+    }
+        system_clock::time_point end = system_clock::now();
+        duration <double> delta = end - begin;
+        cout << a[i] << endl;
+        cout << delta.count() << " секунд" << endl;
+}
+return 0;
+}
