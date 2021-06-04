@@ -1,0 +1,12 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+int main(int argc, char **argv)
+{
+    time_t t=time(NULL);
+    tm*ptm;
+    char time[100];
+    ptm=localtime(&t);
+    strftime(time, 100, "%c", ptm);
+    cout<<time<<endl;
+}
