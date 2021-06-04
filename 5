@@ -43,7 +43,7 @@ int main ()
     uint64_t num;
 
     for (num = 1; num <= 0xFFFFFFFFFFFFFFFF; num++) {
-        if (Generator(num) && BitCount(num) == 3) {
+        if (Generator(num) && BitCount(num) == 2) {
             cout <<"dec: "<< dec << num << "\t" <<"hex: "<< hex << num << endl;
 
         };
