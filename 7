@@ -1,0 +1,117 @@
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+using namespace std;
+class card
+{
+private:
+    string n;
+    string m;
+    string nam[9]=
+    {"6","7","8","9","10","Валет","Дама","Король","Tуз"};
+    string man[4]= {"Крести","Пики","Черви","Бубби"};
+public:
+    card()
+    {
+        n="t";
+        m="t";
+    }
+    card(string a, string b)
+    {
+        n=a;
+        m=b;
+    }
+    void peremesh();
+    void zap();
+    void viv();
+    void color();
+    void naminal();
+    void dampic();
+    void tuz();
+    friend ostream& operator<<(ostream& out, const card&
+                               s)
+    {
+        return out<<s.n<<":"<<s.m<<endl;
+    }
+    vector<card> k;
+};
+void card::zap()
+{
+    for (int j=0; j<4; j++) {
+        for (int i=0; i<9; i++) {
+            string mast=nam[i];
+            string nominal=man[j];
+            card a(nominal,mast);
+            k.push_back(a);
+        }
+    }
+}
+void card::viv()
+{
+    for(int i=0; i<36; i++) {
+        cout<<"Карта № "<<i+1<<" "<<k[i];
+    }
+}
+void card::peremesh()
+{
+    cout<<"Перемешенная колода"<<endl;
+    random_device rndom;
+    srand(rndom());
+    random_shuffle(k.begin(), k.end());
+    for(int i=0; i<36; i++) {
+        cout<<"Карта № "<<i+1<<" "<<k[i];
+    }
+}
+void card::color()
+{
+    for(int i=0; i<35; i++) {
+        if ((
+                (k[i].n==k[i+1].n)
+                ||((k[i+1].n=="Крести")&&(k[i].n=="Пики"))
+                ||((k[i+1].n=="Пики")&&(k[i].n=="Крести")))
+            ||((k[i+1].n=="V")&&(k[i].n=="Бубби"))
+            ||((k[i+1].n=="Бубби")&&(k[i].n=="Пики"))
+           ) {
+            cout<<"№ "<<i+1<<" и № "<<i+2<<" Одинакового цвета"<<endl;
+        }
+    }
+}
+void card::naminal()
+{
+    for(int i=0; i<35; i++) {
+        if (k[i].m==k[i+1].m) {
+            cout<<"№ "<<i+1<<" и № "<<i+2<<" Одинакового номинала"<<endl;
+        }
+    }
+}
+void card::dampic()
+{
+    for(int i=0; i<36; i++) {
+        if ((k[i].m=="Дама")&&(k[i].n=="Пики")) {
+            cout<<"№ "<<i+1<<" Дама пик"<<endl;
+        }
+    }
+}
+void card::tuz()
+{
+    for(int i=0; i<36; i++) {
+        if (k[i].m=="Tуз") {
+            cout<<"№ "<<i+1<<" Туз"<<endl;
+        }
+    }
+}
+int main()
+{
+    card a;
+    a.zap();
+    a.viv();
+    a.peremesh();
+    a.color();
+    a.naminal();
+    a.dampic();
+    a.tuz();
+    return 0;
+}
