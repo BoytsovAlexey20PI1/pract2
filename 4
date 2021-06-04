@@ -1,0 +1,66 @@
+#include <iostream>
+#include <random>
+#include <cmath>
+#include <vector>
+#include <ctime>
+#include <chrono>
+using namespace std;
+using namespace chrono;
+
+bool Generator(int num){
+
+    if (num<2)
+        return false;
+
+    if (num<4)
+        return true;
+    if ((num & 1) == 0)
+        return false;
+
+    for (int i = 3; i <= sqrt(num); i+=2)
+        if (num % i == 0)
+            return false;
+
+    return true;
+}
+int main()
+{
+    vector <int> v;
+    v.resize(1000,0);
+    int num;
+    bool gen;
+    mt19937 rnd(clock());
+
+    for (int i = 0; i < 1000; i++)
+    {
+        gen = true;
+        while(gen)
+        {
+            num = rnd();
+            if (Generator(num))
+            {
+                gen = false;
+            }
+        }
+        v.at(i) = num;
+        cout << v.at(i) << endl;
+    }
+
+    int tmp;
+
+    for (int i = 0; i < 998; i++)
+    {
+        for (int j = i + 1; j < 1000; j++)
+            if(v.at(i) > v.at(j))
+            {
+                tmp = v.at(i);
+                v.at(i)= v.at(j);
+                v.at(j) = tmp;
+            }
+    }
+
+    cout << "Минимальное значение: " << v.front() << endl;
+    cout << "Максимальное значение: " << v.back() << endl;
+
+    return 0;
+}
